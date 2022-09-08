@@ -4,7 +4,7 @@ Calculations calculations = new Calculations();
 
 TimeSpan[] spans = new TimeSpan[]
 {
-    new TimeSpan(10,0,0) , // 60
+    new TimeSpan(10,0,0) , // 60   8-10  11/30 -15/00 15-40 16/50 17-30-18
     new TimeSpan(11,0,0),  //30
     new TimeSpan(15,0,0) ,  //10
     new TimeSpan(15,30,0),   //10
@@ -28,14 +28,8 @@ int interval = 30;
 string[] otvet = calculations.AvailablePeriods(spans , Ints , start , end, interval);
 
 
-for (int i = 0; i < otvet.Length; i++)
+foreach (string v in otvet)
 {
-
-    if(i%2==0)
-    {
-        Console.WriteLine("_______");
-    }
-    string? item = otvet[i];
-    Console.WriteLine(item);
+    Console.WriteLine(v);
 }
 

@@ -67,8 +67,15 @@ namespace SF2022User12Lib
                 foreach (var t  in startTimes)
                 {
                     if(item <= t)
+                    {
                         stop = t;
-                    break;
+                        break;
+                    }
+
+                    if(t == startTimes.Last())
+                    {
+                        stop = endWorkingTime;
+                    }
                 }
 
                 tryTime.AddRange(GenereticDate(item, stop, interval));
@@ -78,29 +85,36 @@ namespace SF2022User12Lib
 
             for (int i = 0; i < tryTime.Count; i++)
             {
-                res[i] = tryTime[i].Hours.ToString() +" - " + tryTime[i].Minutes ;
+                var next = tryTime[i]+interval ;
+               
+                             
+                res[i] = $"{MyPars( tryTime[i].Hours.ToString())}" +
+                    $":{MyPars(tryTime[i].Minutes.ToString())}-{MyPars(next.Hours.ToString())}" +
+                    $":{MyPars(next.Minutes.ToString())}";
             }
 
             return res; 
         }
 
+        private string MyPars(string sumbol)
+        {
+            if (sumbol.Length == 1)
+                return "0" + sumbol;
+            else
+                return sumbol;
+        }
+
         private List<TimeSpan> GenereticDate(TimeSpan item, TimeSpan stop, TimeSpan interval)
         {
-            List<TimeSpan> result = new List<TimeSpan>() { item};
+            List<TimeSpan> result = new List<TimeSpan>() ;
             var s = item;
 
-            do
+            while (s+interval<=stop)
             {
-                s += interval;
                 result.Add(s);
-
-                if(s != stop)
-                result.Add(s);
+                s+=interval;
             }
-            while (s <= stop);
-            
-                return result;  
-
+            return result;  
         }
     }
 }
